@@ -1,0 +1,6 @@
+motor_control	KEYWORD1
+CurrentLoopController	KEYWORD1
+PositionCurrentCascadeController	KEYWORD1
+IMotorPwmDriver	KEYWORD1
+Hg7881MotorDriver	KEYWORD1
+Vnh7070asMotorDriver	KEYWORD1

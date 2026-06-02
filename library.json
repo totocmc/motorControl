@@ -1,0 +1,14 @@
+{
+  "name": "motor_control",
+  "version": "0.1.0",
+  "description": "DC brushed motor control: current/position cascade, HG7881 and VNH7070AS drivers",
+  "keywords": ["motor", "pwm", "current", "position", "h-bridge"],
+  "frameworks": ["arduino"],
+  "platforms": "*",
+  "headers": "motor_control/motor_control.hpp",
+  "build": {
+    "srcDir": "src",
+    "includeDir": "include",
+    "flags": ["-std=gnu++17"]
+  }
+}
