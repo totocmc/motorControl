@@ -1,7 +1,4 @@
-#include "motor_control/hg7881_motor_driver.hpp"
-
-#include <algorithm>
-#include <cmath>
+#include <motor_control.hpp>
 
 namespace motor_control {
 

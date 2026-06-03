@@ -5,7 +5,7 @@
   "keywords": ["motor", "pwm", "current", "position", "h-bridge"],
   "frameworks": ["arduino"],
   "platforms": "*",
-  "headers": "motor_control/motor_control.hpp",
+  "headers": "motor_control.hpp",
   "build": {
     "srcDir": "src",
     "includeDir": "include",

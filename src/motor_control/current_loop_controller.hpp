@@ -1,6 +1,6 @@
 #pragma once
 
-#include "motor_control/current_sensor.hpp"
+#include "current_sensor.hpp"
 
 namespace motor_control {
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "motor_control/current_loop_controller.hpp"
-#include "motor_control/position_sensor.hpp"
+#include "current_loop_controller.hpp"
+#include "position_sensor.hpp"
 
 namespace motor_control {
 

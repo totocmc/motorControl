@@ -1,7 +1,7 @@
 #pragma once
 
-#include "motor_control/hg7881_bridge_pins.hpp"
-#include "motor_control/motor_pwm_driver.hpp"
+#include "hg7881_bridge_pins.hpp"
+#include "motor_pwm_driver.hpp"
 
 namespace motor_control {
 

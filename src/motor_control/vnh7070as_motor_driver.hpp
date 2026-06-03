@@ -1,7 +1,7 @@
 #pragma once
 
-#include "motor_control/motor_pwm_driver.hpp"
-#include "motor_control/vnh7070as_bridge_pins.hpp"
+#include "motor_pwm_driver.hpp"
+#include "vnh7070as_bridge_pins.hpp"
 
 namespace motor_control {
 

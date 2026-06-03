@@ -1,7 +1,4 @@
-#include "motor_control/vnh7070as_motor_driver.hpp"
-
-#include <algorithm>
-#include <cmath>
+#include <motor_control.hpp>
 
 namespace motor_control {
 

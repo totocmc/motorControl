@@ -1,7 +1,4 @@
-#include "motor_control/position_current_cascade.hpp"
-
-#include <algorithm>
-#include <cmath>
+#include <motor_control.hpp>
 
 namespace motor_control {
 

@@ -1,7 +1,4 @@
-#include "motor_control/current_loop_controller.hpp"
-
-#include <algorithm>
-#include <cmath>
+#include <motor_control.hpp>
 
 namespace motor_control {
 

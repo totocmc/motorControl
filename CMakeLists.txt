@@ -23,6 +23,7 @@ install(TARGETS motor_control
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
+install(FILES src/motor_control.hpp DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(DIRECTORY src/motor_control DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(EXPORT motor_controlTargets
   FILE motor_controlTargets.cmake

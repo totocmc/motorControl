@@ -24,28 +24,48 @@ find_package(motor_control 0.1 REQUIRED)
 target_link_libraries(mon_app PRIVATE motor_control::motor_control)
 ```
 
-### Arduino IDE 2.x
+### Arduino IDE
 
-1. Copie ou clone ce dépôt sous le nom du dossier **`motor_control`** dans le répertoire des bibliothèques Arduino, par exemple :
-   - macOS : `~/Documents/Arduino/libraries/motor_control`
-   - Windows : `Mes documents\Arduino\libraries\motor_control`
-2. Vérifie que tu as bien `library.properties` à la racine du dossier et les sources sous `src/` (fichiers `.cpp` à la racine de `src/`, en-têtes dans `src/motor_control/`).
-3. Redémarre l’IDE, puis **Croquis → Inclure la bibliothèque → motor_control**, ou dans ton `.ino` / `.cpp` :
-   ```cpp
-   #include <motor_control/motor_control.hpp>
+Ce dépôt **est** une bibliothèque Arduino 1.5 (`library.properties` + dossier `src/`). Il n’y a qu’**une** façon fiable d’utiliser l’exemple avec l’IDE :
+
+1. **Installer la bibliothèque** : le dossier du dépôt (celui qui contient `library.properties`) doit s’appeler **`motor_control`** et se trouver sous le répertoire des bibliothèques Arduino :
+   - macOS / Linux : `~/Documents/Arduino/libraries/motor_control`
+   - Windows : `Documents\Arduino\libraries\motor_control`
+
+   Exemple (lien symbolique, à adapter avec ton chemin) :
+
+   ```bash
+   ln -sf "/Users/.../motorControl" ~/Documents/Arduino/libraries/motor_control
    ```
-4. **C++17** : le code utilise le standard C++17 (`std::clamp`, etc.). Les cartes **ESP32**, **RP2040** (pico), **STM32** (Giga, Portenta), **Renesas** récentes conviennent en général. Sur **AVR** (Uno classique), le compilateur est souvent trop ancien ou le binaire trop gros — privilégie une carte 32 bits.
 
-Tu peux garder le même dépôt pour **CMake** et pour **Arduino** : les en-têtes sont dans `src/motor_control/` pour satisfaire la [spécification des bibliothèques 1.5](https://arduino.github.io/arduino-cli/library-specification/) (chemins d’inclusion : racine de la lib + `src/`).
+2. **Redémarrer** l’Arduino IDE (ou au minimum fermer tous les croquis).
 
-**Exemple de croquis** : `arduino/MotorControlDemo/MotorControlDemo.ino` — installation lib via `arduino/README.md` (lien symbolique recommandé).
+3. **Ouvrir l’exemple** : **Fichier → Exemples → motor_control → MotorControlDemo**.  
+   Ne pas partir d’un « nouveau croquis » vide : il n’aura pas la bibliothèque attachée.
+
+4. Choisir une carte **32 bits** avec **C++17** (ex. RP2040 « Waveshare RP2040 Zero », ESP32). Éviter l’Uno AVR classique.
+
+**Exemple RP2040** (`examples/MotorControlDemo/`) : avec une carte **RP2040** et le cœur *Raspberry Pi Pico / RP2040* (Earle Philhower recommandé), le croquis compile `MotorControlDemo_pico.cpp` : boucle **courant 10 kHz** (`repeating_timer` SDK), boucle **position 2 kHz** dans `loop()`, PWM **HG7881** sur deux broches, **ADC** courant (A0), angle **AS5600** en I2C. Brochage et constantes de calibration en tête de ce fichier ; touches série `z` / `h` / `r` / `s` décrites au démarrage.
+
+Dans **tes** croquis (après installation), l’en-tête public attendu par `library.properties` (`includes`) est à la racine de `src/` :
+
+```cpp
+#include <motor_control.hpp>
+```
+
+Tu peux aussi inclure des modules seuls (`#include <motor_control/current_loop_controller.hpp>`, etc.) si tu veux limiter les dépendances de compilation.
+
+**MounRiver / CH32** : voir le dossier `mounriver/` et son `README.md`.
+
+Tu peux garder le même dépôt pour **CMake** et pour **Arduino** : les en-têtes sont dans `src/motor_control/` (voir [spécification bibliothèques 1.5](https://arduino.github.io/arduino-cli/library-specification/)).
 
 ## Fichiers publics
 
-Les fichiers sources sont sous `src/` ; les en-têtes publics sous `src/motor_control/` (inclusion `#include <motor_control/...>`).
+Les fichiers sources sont sous `src/` ; le point d’entrée unique est `src/motor_control.hpp` (`#include <motor_control.hpp>`). Les en-têtes détaillés sont sous `src/motor_control/`.
 
 | En-tête | Rôle |
 |--------|------|
+| `motor_control.hpp` | Point d’entrée unique (réexporte tous les en-têtes publics ci-dessous) |
 | `motor_control/current_sensor.hpp` | `ICurrentSensor::read_amperes()` |
 | `motor_control/current_loop_controller.hpp` | PI courant + anti-windup |
 | `motor_control/position_sensor.hpp` | `IPositionSensor::read_position()` (même unité que la consigne) |
@@ -56,7 +76,6 @@ Les fichiers sources sont sous `src/` ; les en-têtes publics sous `src/motor_co
 | `motor_control/hg7881_motor_driver.hpp` | `Hg7881MotorDriver` (`IMotorPwmDriver` pour HG7881 / L9110) |
 | `motor_control/vnh7070as_bridge_pins.hpp` | `IVnh7070asBridgePins` (INA / INB / PWM) |
 | `motor_control/vnh7070as_motor_driver.hpp` | `Vnh7070asMotorDriver` (`IMotorPwmDriver` pour VNH7070AS) |
-| `motor_control/motor_control.hpp` | Agrégat des en-têtes publics |
 
 **VNH7070AS** : régler le timer PWM de la broche **PWM** ≤ **20 kHz** (datasheet ST). Sortie veille recommandée après power-up : lever INA ou INB puis PWM ≥ **20 µs** plus tard (voir datasheet).
 
